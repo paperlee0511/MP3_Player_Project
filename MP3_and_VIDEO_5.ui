@@ -1,0 +1,799 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>916</width>
+    <height>824</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget {
+    background-color: #f4f6f9;
+    font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+    font-size: 11pt;
+    color: #333;
+}
+
+/* QLineEdit */
+QLineEdit {
+    border: 2px solid #d0d0d0;
+    border-radius: 8px;
+    padding: 6px 10px;
+    background-color: #ffffff;
+    transition: border 0.2s;
+}
+
+QLineEdit:focus {
+    border: 2px solid #3399ff;
+    background-color: #ffffff;
+}
+
+/* QPushButton */
+QPushButton {
+    background-color: #4a90e2;
+    color: white;
+    border: 2px solid #4a90e2;
+    border-radius: 8px;
+    padding: 6px 12px;
+}
+
+QPushButton:hover {
+    background-color: #357ab8;
+    border: 2px solid #357ab8;
+}
+
+QPushButton:pressed {
+    background-color: #2c5f8a;
+    border: 2px solid #2c5f8a;
+}
+
+/* QTableWidget */
+QTableWidget {
+    background-color: #ffffff;
+    border: 2px solid #cccccc;
+    border-radius: 10px;
+    gridline-color: #dddddd;
+}
+
+QHeaderView::section {
+    background-color: #e8f0fe;
+    padding: 4px;
+    border: none;
+    border-bottom: 1px solid #cccccc;
+    font-weight: bold;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+/* QSlider */
+QSlider::groove:horizontal {
+    height: 8px;
+    background: #e0e0e0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+QSlider::sub-page:horizontal {
+    background: #4a90e2;
+    border-radius: 4px;
+}
+
+QSlider::add-page:horizontal {
+    background: #f0f0f0;
+    border-radius: 4px;
+}
+
+QSlider::handle:horizontal {
+    background: white;
+    border: 2px solid #4a90e2;
+    width: 14px;
+    margin: -5px 0;
+    border-radius: 7px;
+}
+
+/* QScrollBar: 세로 스크롤바 */
+QScrollBar:vertical {
+    background: #f5f5f5;
+    width: 10px;
+    margin: 0px;
+    border-radius: 5px;
+}
+
+QScrollBar::handle:vertical {
+    background: #c0c0c0;
+    border-radius: 5px;
+    min-height: 20px;
+}
+
+QScrollBar::add-line:vertical,
+QScrollBar::sub-line:vertical {
+    height: 0px;
+    background: none;
+}
+</string>
+  </property>
+  <widget class="QWidget" name="widget">
+   <layout class="QHBoxLayout" name="horizontalLayout_6">
+    <item>
+     <widget class="QStackedWidget" name="stackedWidget">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="page_mp3">
+       <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="7,0">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_3" stretch="9,1,1,1">
+          <property name="topMargin">
+           <number>10</number>
+          </property>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_5" stretch="13">
+            <property name="spacing">
+             <number>10</number>
+            </property>
+            <property name="leftMargin">
+             <number>10</number>
+            </property>
+            <property name="topMargin">
+             <number>10</number>
+            </property>
+            <property name="rightMargin">
+             <number>10</number>
+            </property>
+            <property name="bottomMargin">
+             <number>10</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="lbl_image">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QLabel {
+    border: 2px solid #444444;       /* 진한 회색 테두리 */
+    border-radius: 20px;             /* 둥글기 정도 (숫자 클수록 둥글어짐) */
+    padding: 6px;                    /* 안쪽 여백 */
+    background-color: #ffffff;       /* 선택 사항: 흰 배경 */
+}
+</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="scaledContents">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <property name="spacing">
+             <number>5</number>
+            </property>
+            <property name="leftMargin">
+             <number>20</number>
+            </property>
+            <property name="topMargin">
+             <number>5</number>
+            </property>
+            <property name="rightMargin">
+             <number>20</number>
+            </property>
+            <property name="bottomMargin">
+             <number>5</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="lbl_song_name">
+              <property name="font">
+               <font>
+                <family>Segoe UI</family>
+                <pointsize>11</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">border: 2px solid #444444;       
+border-radius: 10px;             /* 둥글기 정도 (숫자 클수록 둥글어짐) */
+padding: 6px;                    /* 안쪽 여백 */
+background-color: #ffffff;       /* 선택 사항: 흰 배경 */
+
+</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <property name="leftMargin">
+             <number>30</number>
+            </property>
+            <property name="topMargin">
+             <number>10</number>
+            </property>
+            <property name="rightMargin">
+             <number>30</number>
+            </property>
+            <property name="bottomMargin">
+             <number>10</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="current_time">
+              <property name="font">
+               <font>
+                <family>Segoe UI</family>
+                <pointsize>-1</pointsize>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QLabel {
+    color: #333333;
+    font-size: 14px;
+}
+</string>
+              </property>
+              <property name="text">
+               <string>00:00</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSlider" name="sld_bar">
+              <property name="toolTipDuration">
+               <number>-1</number>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QSlider::groove:horizontal {
+    border: 1px solid #bbb;
+    background: white;         /* 트랙 배경을 흰색으로 설정 */
+    height: 8px;
+    border-radius: 4px;
+}
+
+QSlider::sub-page:horizontal {
+    background: #0078d7;        /* 슬라이더 진행 부분 색상 (예: 파랑) */
+    border-radius: 4px;
+}
+
+QSlider::add-page:horizontal {
+    background: white;         /* 슬라이더 미진행 부분 색상 */
+    border-radius: 4px;
+}
+
+QSlider::handle:horizontal {
+    background: #0078d7;        /* 슬라이더 핸들 색상 */
+    border: 1px solid #5c5c5c;
+    width: 12px;
+    margin: -4px 0;
+    border-radius: 6px;
+}
+</string>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="total_time">
+              <property name="font">
+               <font>
+                <family>Segoe UI</family>
+                <pointsize>-1</pointsize>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QLabel {
+    color: #333333;
+    font-size: 14px;
+}
+</string>
+              </property>
+              <property name="text">
+               <string>03:34</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,1,1,1,1">
+            <property name="spacing">
+             <number>10</number>
+            </property>
+            <property name="leftMargin">
+             <number>10</number>
+            </property>
+            <property name="topMargin">
+             <number>10</number>
+            </property>
+            <property name="rightMargin">
+             <number>10</number>
+            </property>
+            <property name="bottomMargin">
+             <number>10</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="btn_shuffle">
+              <property name="styleSheet">
+               <string notr="true">QPushButton {
+    background-color: transparent;
+    border: none;
+    padding: 8px;
+    border-radius: 24px; /* 원형 효과 */
+    min-width: 48px;
+    min-height: 48px;
+    max-width: 48px;
+    max-height: 48px;
+}
+
+QPushButton:hover {
+    background-color: #e0e7ff;   /* 연한 파란 배경 (hover) */
+}
+
+QPushButton:pressed {
+    background-color: #c7d6f5;   /* 더 진한 파란색 (click) */
+}
+</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>C:/Users/whdgm/Desktop/mp3icon/shuffle_icon.png</normaloff>C:/Users/whdgm/Desktop/mp3icon/shuffle_icon.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>50</width>
+                <height>50</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_previous">
+              <property name="styleSheet">
+               <string notr="true">QPushButton {
+    background-color: transparent;
+    border: none;
+    padding: 8px;
+    border-radius: 24px; /* 원형 효과 */
+    min-width: 48px;
+    min-height: 48px;
+    max-width: 48px;
+    max-height: 48px;
+}
+
+QPushButton:hover {
+    background-color: #e0e7ff;   /* 연한 파란 배경 (hover) */
+}
+
+QPushButton:pressed {
+    background-color: #c7d6f5;   /* 더 진한 파란색 (click) */
+}
+</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>C:/Users/whdgm/Desktop/mp3icon/previous_icon.png</normaloff>C:/Users/whdgm/Desktop/mp3icon/previous_icon.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>50</width>
+                <height>50</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_play">
+              <property name="styleSheet">
+               <string notr="true">QPushButton {
+    background-color: transparent;
+    border: none;
+    padding: 8px;
+    border-radius: 24px; /* 원형 효과 */
+    min-width: 48px;
+    min-height: 48px;
+    max-width: 48px;
+    max-height: 48px;
+}
+
+QPushButton:hover {
+    background-color: #e0e7ff;   /* 연한 파란 배경 (hover) */
+}
+
+QPushButton:pressed {
+    background-color: #c7d6f5;   /* 더 진한 파란색 (click) */
+}
+</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>C:/Users/whdgm/Desktop/mp3icon/play_icon.png</normaloff>C:/Users/whdgm/Desktop/mp3icon/play_icon.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>50</width>
+                <height>50</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_next">
+              <property name="styleSheet">
+               <string notr="true">QPushButton {
+    background-color: transparent;
+    border: none;
+    padding: 8px;
+    border-radius: 24px; /* 원형 효과 */
+    min-width: 48px;
+    min-height: 48px;
+    max-width: 48px;
+    max-height: 48px;
+}
+
+QPushButton:hover {
+    background-color: #e0e7ff;   /* 연한 파란 배경 (hover) */
+}
+
+QPushButton:pressed {
+    background-color: #c7d6f5;   /* 더 진한 파란색 (click) */
+}
+</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>C:/Users/whdgm/Desktop/mp3icon/next_icon.png</normaloff>C:/Users/whdgm/Desktop/mp3icon/next_icon.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>50</width>
+                <height>50</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_repeat">
+              <property name="styleSheet">
+               <string notr="true">QPushButton {
+    background-color: transparent;
+    border: none;
+    padding: 8px;
+    border-radius: 24px; /* 원형 효과 */
+    min-width: 48px;
+    min-height: 48px;
+    max-width: 48px;
+    max-height: 48px;
+}
+
+QPushButton:hover {
+    background-color: #e0e7ff;   /* 연한 파란 배경 (hover) */
+}
+
+QPushButton:pressed {
+    background-color: #c7d6f5;   /* 더 진한 파란색 (click) */
+}
+</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>C:/Users/whdgm/Desktop/mp3icon/repeat_icon.png</normaloff>C:/Users/whdgm/Desktop/mp3icon/repeat_icon.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>50</width>
+                <height>50</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_4" stretch="1,9,1">
+          <item>
+           <widget class="QLabel" name="label">
+            <property name="font">
+             <font>
+              <family>Segoe UI</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>플레이리스트</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QListWidget" name="listWidget">
+            <property name="styleSheet">
+             <string notr="true">border: 2px solid #444;
+border-radius: 15px;</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <property name="spacing">
+             <number>10</number>
+            </property>
+            <property name="leftMargin">
+             <number>10</number>
+            </property>
+            <property name="topMargin">
+             <number>10</number>
+            </property>
+            <property name="rightMargin">
+             <number>10</number>
+            </property>
+            <property name="bottomMargin">
+             <number>10</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="btn_add">
+              <property name="styleSheet">
+               <string notr="true">QPushButton {
+    background-color: transparent;
+    border: none;
+    padding: 8px;
+    border-radius: 24px; /* 원형 효과 */
+    min-width: 48px;
+    min-height: 48px;
+    max-width: 48px;
+    max-height: 48px;
+}
+
+QPushButton:hover {
+    background-color: #e0e7ff;   /* 연한 파란 배경 (hover) */
+}
+
+QPushButton:pressed {
+    background-color: #c7d6f5;   /* 더 진한 파란색 (click) */
+}
+</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>C:/Users/whdgm/Desktop/mp3icon/folder_download_icon.png</normaloff>C:/Users/whdgm/Desktop/mp3icon/folder_download_icon.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>40</width>
+                <height>40</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_remove">
+              <property name="styleSheet">
+               <string notr="true">QPushButton {
+    background-color: transparent;
+    border: none;
+    padding: 8px;
+    border-radius: 24px; /* 원형 효과 */
+    min-width: 48px;
+    min-height: 48px;
+    max-width: 48px;
+    max-height: 48px;
+}
+
+QPushButton:hover {
+    background-color: #e0e7ff;   /* 연한 파란 배경 (hover) */
+}
+
+QPushButton:pressed {
+    background-color: #c7d6f5;   /* 더 진한 파란색 (click) */
+}
+</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>C:/Users/whdgm/Desktop/mp3icon/folder_delete_icon.png</normaloff>C:/Users/whdgm/Desktop/mp3icon/folder_delete_icon.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>40</width>
+                <height>40</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_video">
+              <property name="styleSheet">
+               <string notr="true">QPushButton {
+    background-color: transparent;
+    border: none;
+    padding: 8px;
+    border-radius: 24px; /* 원형 효과 */
+    min-width: 48px;
+    min-height: 48px;
+    max-width: 48px;
+    max-height: 48px;
+}
+
+QPushButton:hover {
+    background-color: #e0e7ff;   /* 연한 파란 배경 (hover) */
+}
+
+QPushButton:pressed {
+    background-color: #c7d6f5;   /* 더 진한 파란색 (click) */
+}
+</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>C:/Users/whdgm/Desktop/mp3icon/tv_mode_icon.png</normaloff>C:/Users/whdgm/Desktop/mp3icon/tv_mode_icon.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>60</width>
+                <height>60</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_video">
+       <layout class="QVBoxLayout" name="verticalLayout_video" stretch="0">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="7,4">
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_8" stretch="1,9">
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_7">
+                <item>
+                 <widget class="QLineEdit" name="lied_youtube">
+                  <property name="text">
+                   <string>유튜브 검색창</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btn_result">
+                  <property name="text">
+                   <string>검색</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_9">
+                <item>
+                 <widget class="QWebEngineView" name="view_video" native="true"/>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_7" stretch="9,1">
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_6">
+              <item>
+               <widget class="QListWidget" name="result_view"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout">
+              <item>
+               <widget class="QLineEdit" name="lied_youtube_url">
+                <property name="text">
+                 <string>URL</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_downloa0d">
+                <property name="text">
+                 <string>음원 추출 다운로드</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_back">
+                <property name="text">
+                 <string>MP3로 돌아가기</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>916</width>
+     <height>26</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QWebEngineView</class>
+   <extends>QWidget</extends>
+   <header>qwebengineview.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

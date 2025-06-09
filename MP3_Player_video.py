@@ -1,26 +1,26 @@
 import os
-import requests
-from urllib.parse import quote
-import json
-import re
-from PyQt5.QtCore import QThread, pyqtSignal, QUrl
+import requests                     # 웹 요청(유튜브 페이지에서 가져올 때)
+from urllib.parse import quote      # url에 한글/특수문자 포함시 인코딩
+import json                         # 유튜브에서 받은 데이터
+import re                           # 정규 표현식
+from PyQt5.QtCore import QThread, pyqtSignal, QUrl  # 스레드, 시그널, url 관리
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
-from bs4 import BeautifulSoup
-from audio import YouTubeAudioExtractor
+from bs4 import BeautifulSoup                       # HTML 파싱
+from audio import YouTubeAudioExtractor             # 음원 추출 기능
 from PyQt5.QtCore import QSize
 from PyQt5.QtCore import Qt
 
 
 
-
+# 유튜브 검색을 위한 별도 스레드 클래스
 class YoutubeSearchThread(QThread):
     """YouTube 검색 스레드"""
-    search_finished = pyqtSignal(list)
+    search_finished = pyqtSignal(list)      # 검색 결과가 준비되면 이벤트 발생
 
     def __init__(self, query):
         super().__init__()
-        self.query = query
+        self.query = query  # 검색할 문자열
 
     def run(self):
         try:
@@ -34,7 +34,7 @@ class YoutubeSearchThread(QThread):
                 'Upgrade-Insecure-Requests': '1',
             }
 
-            # 검색 쿼리 인코딩
+            # 검색어를 url에 넣을 수 있게 인코딩 # 검색 쿼리 인코딩
             query_encoded = quote(self.query)
             url = f"https://www.youtube.com/results?search_query={query_encoded}"
 
@@ -43,7 +43,7 @@ class YoutubeSearchThread(QThread):
             session.headers.update(headers)
 
             # 타임아웃 설정
-            response = session.get(url, timeout=10)
+            response = session.get(url, timeout=10) # 10초 제한
             response.raise_for_status()
 
             # 응답 텍스트에서 JavaScript 데이터 추출
@@ -63,13 +63,14 @@ class YoutubeSearchThread(QThread):
         results = []
 
         try:
+            # 유튜브 결과페이지에서 'var ytInitialData = ... 부분 추출
             # 방법 1: JavaScript 데이터에서 추출
             pattern = r'var ytInitialData = ({.*?});'
             match = re.search(pattern, html_content)
 
             if match:
                 try:
-                    data = json.loads(match.group(1))
+                    data = json.loads(match.group(1))   # json 파싱
                     # ytInitialData에서 비디오 정보 추출
                     contents = data.get('contents', {}).get('twoColumnSearchResultsRenderer', {}).get('primaryContents',
                                                                                                       {}).get(
@@ -91,11 +92,11 @@ class YoutubeSearchThread(QThread):
                                             'video_id': video_id
                                         })
 
-                                        if len(results) >= 10:
+                                        if len(results) >= 20:
                                             break
-                            if len(results) >= 10:
+                            if len(results) >= 20:
                                 break
-                        if len(results) >= 10:
+                        if len(results) >= 20:
                             break
 
                 except json.JSONDecodeError:
@@ -146,22 +147,23 @@ class YoutubeSearchThread(QThread):
 
         return results
 
-
+# 유튜브 검색, 재생, 음원추출 모두 담당하는 클랙스
 class YouTubeVideoPlayer:
     """YouTube 비디오 플레이어 클래스"""
 
     def __init__(self, main_window):
-        self.main_window = main_window
-        self.search_results = []
-        self.search_thread = None
+        self.main_window = main_window  # 메인 윈도우 객체 받아옴
+        self.search_results = []        # 검색결과(딕셔너리 리스트)
+        self.search_thread = None       # 검색용 백그라운드 스레드
 
-        self.setup_video_page()
-        self.setup_connections()
+        self.setup_video_page()         # 비디오 페이지 ui 초기화
+        self.setup_connections()        # 각종 이벤트 연결
 
+    # 버튼, 입력창 등과 함수 연결
     def setup_connections(self):
         """비디오 페이지 관련 연결"""
-        self.main_window.btn_result.clicked.connect(self.search_youtube)
-        self.main_window.btn_downloa0d.clicked.connect(self.download_audio)
+        self.main_window.btn_result.clicked.connect(self.search_youtube)       # 검색 버튼 클릭
+        self.main_window.btn_downloa0d.clicked.connect(self.download_audio)     # 다운로드 버튼 클릭
 
         # 검색 결과 테이블 더블클릭 시 비디오 재생
         self.main_window.result_view.itemDoubleClicked.connect(self.play_selected_video)
@@ -169,17 +171,19 @@ class YouTubeVideoPlayer:
         # 엔터키로 검색 가능하도록
         self.main_window.lied_youtube.returnPressed.connect(self.search_youtube)
 
+    # 비디오 관련 ui 초기화
     def setup_video_page(self):
-        self.main_window.result_view.clear()
-        self.main_window.result_view.setSpacing(5)
-        self.main_window.lied_youtube.clear()
+        self.main_window.result_view.clear()        # 결과 목록 비움
+        self.main_window.result_view.setSpacing(5)  # 아이템 간격
+        self.main_window.lied_youtube.clear()       # 검색어 입력창 비움
         self.main_window.lied_youtube.setPlaceholderText("검색어를 입력하세요...")
-        self.main_window.lied_youtube_url.clear()
+        self.main_window.lied_youtube_url.clear()   # url 입력창 비움
         self.main_window.lied_youtube_url.setPlaceholderText("YouTube URL을 입력하세요...")
 
+    # 검색 버튼/엔터 입력시 유튜브에서 검색
     def search_youtube(self):
         """YouTube 검색 실행"""
-        query = self.main_window.lied_youtube.text().strip()
+        query = self.main_window.lied_youtube.text().strip()    # 입력된 검색어 가져옴
         if not query:
             QMessageBox.warning(self.main_window, "경고", "검색어를 입력해주세요.")
             return
@@ -187,7 +191,7 @@ class YouTubeVideoPlayer:
         if self.search_thread and self.search_thread.isRunning():
             return  # 이미 검색 중이면 무시
 
-        # 검색 중 표시
+        # 검색 중 표시 UI로 표시
         self.main_window.btn_result.setText("검색 중...")
         self.main_window.btn_result.setEnabled(False)
         self.main_window.result_view.clear()
@@ -197,17 +201,18 @@ class YouTubeVideoPlayer:
         self.search_thread.search_finished.connect(self.display_search_results)
         self.search_thread.start()
 
+    # 검색결과 리스트에 표시
     def display_search_results(self, results):
         self.search_results = results
         self.main_window.result_view.clear()  # 기존 결과 삭제
 
         for i, result in enumerate(results):
-            # 리스트 아이템 생성
+            # 리스트 아이템 생성(썸네일 + 제목 표시)
             item = QListWidgetItem()
             item.setSizeHint(QSize(390, 70))  # 한 행 높이, 너비 조정 (필요시 변경)
             self.main_window.result_view.addItem(item)
 
-            # 썸네일 생성
+            # 썸네일 생성(미리보기 이미지) 표시
             video_id = result.get("video_id", "")
             thumbnail_url = f"https://img.youtube.com/vi/{video_id}/default.jpg"
             thumb_label = QLabel()
@@ -229,15 +234,15 @@ class YouTubeVideoPlayer:
 
             # 제목 라벨 생성
             title_label = QLabel(result["title"])
-            title_label.setToolTip(result["title"])
-            title_label.setWordWrap(True)
+            title_label.setToolTip(result["title"])     # 마우스 올리면 전체 제목 보여줌
+            title_label.setWordWrap(True)               # 줄바꿈 허용
             # title_label.setMinimumWidth(260)
             # title_label.setMaximumWidth(360)
             font = title_label.font()
             font.setPointSize(11)
             title_label.setFont(font)
 
-            # 수평 레이아웃으로 썸네일 + 제목 배치
+            # 수평 레이아웃으로 썸네일 + 제목 배치 # 썸네일 + 제목을 가로로 배치
             widget = QWidget()
             layout = QHBoxLayout()
             layout.setContentsMargins(5, 2, 5, 2)
@@ -248,6 +253,7 @@ class YouTubeVideoPlayer:
 
             self.main_window.result_view.setItemWidget(item, widget)
 
+        # 검색 버튼 다시 활성화
         self.main_window.btn_result.setText("검색")
         self.main_window.btn_result.setEnabled(True)
 
@@ -256,16 +262,18 @@ class YouTubeVideoPlayer:
         else:
             print(f"검색 완료: {len(results)}개 결과")
 
+    # 검색결과 더블 클릭시 비디오 재생
     def play_selected_video(self, item):
         row = self.main_window.result_view.row(item)
         if 0 <= row < len(self.search_results):
             video_url = self.search_results[row]["url"]
             video_title = self.search_results[row]["title"]
 
-            self.main_window.lied_youtube_url.setText(video_url)
-            self.load_video(video_url)
+            self.main_window.lied_youtube_url.setText(video_url)    # url 입력창에 링크 표시
+            self.load_video(video_url)                              # 유튜브 재생
             print(f"재생 중: {video_title}")
 
+    # 비디오를 웹뷰에 로드(재생)
     def load_video(self, url):
         """비디오를 웹뷰에 로드"""
         try:
@@ -327,3 +335,4 @@ class YouTubeVideoPlayer:
     def set_search_query(self, query):
         """검색어 설정 (외부에서 호출 가능)"""
         self.main_window.lied_youtube.setText(query)
+
